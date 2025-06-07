@@ -124,6 +124,15 @@ export default function Home() {
               >
                 Chưa Hoàn Thành
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleResetProgress}
+                className="text-accent border-accent hover:bg-accent hover:text-accent-foreground"
+              >
+                <RotateCcw className="h-3 w-3 mr-1" />
+                Reset
+              </Button>
             </div>
           </div>
 

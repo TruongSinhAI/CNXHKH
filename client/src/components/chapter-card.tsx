@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Star, StarIcon, Check, Lock, Play } from "lucide-react";
+import { Clock, Star, Check, Lock, Play } from "lucide-react";
 import { useLocation } from "wouter";
+import { getChapterStatus, isChapterAccessible } from "@/lib/progress-storage";
 import type { Chapter, UserProgress } from "@shared/schema";
 
 interface ChapterCardProps {
@@ -12,14 +13,14 @@ interface ChapterCardProps {
 export default function ChapterCard({ chapter, userProgress }: ChapterCardProps) {
   const [, setLocation] = useLocation();
   
-  const isCompleted = userProgress.completedChapters.includes(chapter.id);
-  const isCurrent = userProgress.currentChapter === chapter.id;
+  const status = getChapterStatus(chapter.id, userProgress);
+  const canAccess = isChapterAccessible(chapter.id, userProgress);
   const score = userProgress.quizScores[chapter.id];
   
   const getStatusIcon = () => {
-    if (isCompleted) {
+    if (status === "completed") {
       return <Check className="h-5 w-5 text-success" />;
-    } else if (isCurrent) {
+    } else if (status === "current") {
       return <Play className="h-5 w-5 text-primary" />;
     } else {
       return <Lock className="h-5 w-5 text-muted-foreground" />;
@@ -27,24 +28,16 @@ export default function ChapterCard({ chapter, userProgress }: ChapterCardProps)
   };
 
   const getStatusText = () => {
-    if (isCompleted) return "Đã hoàn thành";
-    if (isCurrent) return "Đang học";
+    if (status === "completed") return "Đã hoàn thành";
+    if (status === "current") return "Có thể học";
     return "Chưa mở khóa";
   };
 
-  const getStatusColor = () => {
-    if (isCompleted) return "success";
-    if (isCurrent) return "primary";
-    return "muted";
-  };
-
   const getProgressPercentage = () => {
-    if (isCompleted) return score || 100;
-    if (isCurrent) return 60;
+    if (status === "completed") return score || 100;
+    if (status === "current") return 0;
     return 0;
   };
-
-  const canAccess = isCompleted || isCurrent;
 
   const handleClick = () => {
     if (canAccess) {
@@ -63,8 +56,8 @@ export default function ChapterCard({ chapter, userProgress }: ChapterCardProps)
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
             <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-              isCompleted ? 'bg-success/10' : 
-              isCurrent ? 'bg-primary/10' : 
+              status === 'completed' ? 'bg-success bg-opacity-10' : 
+              status === 'current' ? 'bg-primary bg-opacity-10' : 
               'bg-muted'
             }`}>
               {getStatusIcon()}
@@ -83,8 +76,8 @@ export default function ChapterCard({ chapter, userProgress }: ChapterCardProps)
           <Badge 
             variant="outline" 
             className={`text-xs font-medium ${
-              isCompleted ? 'bg-success/10 text-success border-success/20' :
-              isCurrent ? 'bg-primary/10 text-primary border-primary/20' :
+              status === 'completed' ? 'bg-success bg-opacity-10 text-success border-success border-opacity-20' :
+              status === 'current' ? 'bg-primary bg-opacity-10 text-primary border-primary border-opacity-20' :
               'bg-muted text-muted-foreground border-muted'
             }`}
           >
@@ -117,7 +110,7 @@ export default function ChapterCard({ chapter, userProgress }: ChapterCardProps)
               <Star 
                 key={star}
                 className={`h-3 w-3 ${
-                  isCompleted && score && score >= star * 30 
+                  status === 'completed' && score && score >= star * 30 
                     ? 'text-yellow-400 fill-current' 
                     : 'text-muted-foreground'
                 }`}
