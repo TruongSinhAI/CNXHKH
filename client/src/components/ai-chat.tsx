@@ -20,7 +20,7 @@ export default function AiChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
-      message: "Xin chào! Tôi là trợ lý AI của bạn. Tôi có thể giúp bạn giải thích các khái niệm trong khóa học và trả lời các câu hỏi.",
+      message: "Xin chào! Tôi là trợ lý AI chuyên về môn Chủ nghĩa xã hội khoa học. Tôi có thể giúp bạn hiểu các khái niệm lý luận, giải thích nội dung bài học và hỗ trợ ôn tập kiểm tra.",
       timestamp: Date.now(),
       isUser: false,
     }

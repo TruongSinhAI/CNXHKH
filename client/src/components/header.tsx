@@ -26,7 +26,7 @@ export default function Header({ userProgress }: HeaderProps) {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <GraduationCap className="text-white h-5 w-5" />
               </div>
-              <h1 className="text-xl font-bold text-text-primary">Học Trực Tuyến</h1>
+              <h1 className="text-xl font-bold text-text-primary">Chủ Nghĩa Xã Hội Khoa Học</h1>
             </button>
           </div>
           

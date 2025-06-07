@@ -61,10 +61,10 @@ export default function Home() {
         <div className="mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold text-text-primary mb-4">
-              Chào Mừng Đến Với Khóa Học Tương Tác
+              Chủ Nghĩa Xã Hội Khoa Học
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Khám phá 7 chương học đầy thú vị với hệ thống trắc nghiệm và trợ lý AI thông minh
+              Nghiên cứu hệ thống lý luận về sự phát triển của xã hội loài người và con đường chuyển từ chủ nghĩa tư bản lên chủ nghĩa xã hội
             </p>
             
             {/* Progress Overview */}
