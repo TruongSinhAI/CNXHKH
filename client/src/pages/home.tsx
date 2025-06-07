@@ -6,16 +6,17 @@ import AiChat from "@/components/ai-chat";
 import MobileNav from "@/components/mobile-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, CheckCircle, Trophy, Clock } from "lucide-react";
+import { BookOpen, CheckCircle, Trophy, Clock, RotateCcw } from "lucide-react";
+import { loadUserProgress, resetProgress } from "@/lib/progress-storage";
 import type { Chapter, UserProgress } from "@shared/schema";
 
 export default function Home() {
-  const [userProgress, setUserProgress] = useState<UserProgress>({
-    completedChapters: [1, 2],
-    currentChapter: 3,
-    quizScores: { 1: 100, 2: 95, 3: 85 },
-    totalCorrectAnswers: 28,
-  });
+  const [userProgress, setUserProgress] = useState<UserProgress>(loadUserProgress());
+
+  // Load progress from localStorage on component mount
+  useEffect(() => {
+    setUserProgress(loadUserProgress());
+  }, []);
 
   const [filter, setFilter] = useState<"all" | "incomplete">("all");
 
@@ -37,6 +38,11 @@ export default function Home() {
     }
     return true;
   });
+
+  const handleResetProgress = () => {
+    const newProgress = resetProgress();
+    setUserProgress(newProgress);
+  };
 
   if (isLoading) {
     return (

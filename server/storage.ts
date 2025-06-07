@@ -34,13 +34,13 @@ export class MemStorage implements IStorage {
   }
 
   private initializeData() {
-    // Initialize chapters data
+    // Initialize chapters data based on the official textbook structure
     const chaptersData: Chapter[] = [
       {
         id: 1,
         title: "Nhập Môn Chủ Nghĩa Xã Hội Khoa Học",
-        description: "Tìm hiểu về sự ra đời, phát triển và ý nghĩa của Chủ nghĩa xã hội khoa học",
-        content: `**MỤC TIÊU:**
+        description: "Sự ra đời, phát triển và ý nghĩa của Chủ nghĩa xã hội khoa học",
+        content: `**A. MỤC TIÊU**
 
 **1. Về kiến thức:** Sinh viên có kiến thức cơ bản, hệ thống về sự ra đời, các giai đoạn phát triển; đối tượng, phương pháp và ý nghĩa của việc học tập, nghiên cứu chủ nghĩa xã hội khoa học, một trong ba bộ phận hợp thành chủ nghĩa Mác-Lênin.
 
@@ -48,7 +48,7 @@ export class MemStorage implements IStorage {
 
 **3. Về tư tưởng:** Sinh viên có thái độ tích cực với việc học tập các môn lý luận chính trị; có niềm tin vào mục tiêu, lý tưởng và sự thành công của công cuộc đổi mới do Đảng Cộng sản Việt Nam khởi xướng và lãnh đạo.
 
-**NỘI DUNG:**
+**B. NỘI DUNG**
 
 **1. Sự ra đời của Chủ nghĩa xã hội khoa học**
 
@@ -58,13 +58,13 @@ Chủ nghĩa xã hội khoa học được hiểu theo hai nghĩa:
 
 - **Theo nghĩa hẹp:** Chủ nghĩa xã hội khoa học là một trong ba bộ phận hợp thành chủ nghĩa Mác-Lênin. V.I.Lênin khẳng định: "Nó là người thừa kế chính đáng của tất cả những cái tốt đẹp nhất mà loài người đã tạo ra hồi thế kỷ XIX, đó là triết học Đức, kinh tế chính trị học Anh và chủ nghĩa xã hội Pháp".
 
-**1.1. Hoàn cảnh lịch sử ra đời**
+**1.1. Hoàn cảnh lịch sử ra đời Chủ nghĩa xã hội khoa học**
 
 **1.1.1. Điều kiện kinh tế - xã hội**
 
-Vào những năm 40 của thế kỷ XIX, cuộc cách mạng công nghiệp đã hoàn thành ở nước Anh và bắt đầu chuyển sang nước Pháp, Đức làm xuất hiện nền đại công nghiệp. Sự phát triển này làm cho phương thức sản xuất tư bản chủ nghĩa có bước phát triển vượt bậc.
+Vào những năm 40 của thế kỷ XIX, cuộc cách mạng công nghiệp đã hoàn thành ở nước Anh và bắt đầu chuyển sang nước Pháp, Đức làm xuất hiện nền đại công nghiệp. Nền đại công nghiệp phát triển đã làm cho phương thức sản xuất tư bản chủ nghĩa có bước phát triển vượt bậc.
 
-Cùng với quá trình phát triển của nền đại công nghiệp, sự ra đời hai giai cấp có lợi ích cơ bản đối lập nhau: giai cấp tư sản và giai cấp vô sản (giai cấp công nhân). Cuộc đấu tranh của giai cấp vô sản chống lại sự thống trị áp bức của giai cấp tư sản ngày càng phát triển mạnh mẽ:
+Cùng với quá trình phát triển của nền đại công nghiệp, sự ra đời hai giai cấp có lợi ích cơ bản đối lập nhau: giai cấp tư sản và giai cấp vô sản (giai cấp công nhân). Nhiều cuộc khởi nghĩa, nhiều phong trào đấu tranh đã bắt đầu:
 
 - Phong trào Hiến chương của những người lao động ở nước Anh (1836-1848)
 - Phong trào công nhân dệt ở thành phố Xi-lê-đi, nước Đức (1844)  
@@ -72,19 +72,17 @@ Cùng với quá trình phát triển của nền đại công nghiệp, sự ra
 
 **1.1.2. Tiền đề khoa học tự nhiên và tư tưởng lý luận**
 
-Cuối thế kỷ XVIII, đầu thế kỷ XIX, nhân loại đã đạt nhiều thành tựu to lớn:
-
-**Khoa học tự nhiên:**
+**Tiền đề khoa học tự nhiên:**
 - Học thuyết Tiến hóa
 - Định luật Bảo toàn và chuyển hóa năng lượng  
 - Học thuyết tế bào
 
-**Tư tưởng lý luận:**
+**Tiền đề tư tưởng lý luận:**
 - Triết học cổ điển Đức (Ph.Hêghen, L.Phoiơbắc)
 - Kinh tế chính trị học cổ điển Anh (A.Smith, D.Ricardo)
 - Chủ nghĩa xã hội không tưởng Pháp (Xanh Ximông, S.Phuriê, R.Oen)
 
-Những tiền đề này tạo cơ sở khoa học và phương pháp luận cho các nhà sáng lập Chủ nghĩa xã hội khoa học nghiên cứu những vấn đề lý luận chính trị-xã hội đương thời.`,
+Những tư tưởng xã hội chủ nghĩa không tưởng Pháp đã có những giá trị nhất định nhưng cũng có những hạn chế về tầm nhìn và thế giới quan.`,
         duration: 45,
         order: 1,
         isLocked: false,
@@ -92,7 +90,7 @@ Những tiền đề này tạo cơ sở khoa học và phương pháp luận ch
       {
         id: 2,
         title: "Sứ Mệnh Lịch Sử của Giai Cấp Công Nhân", 
-        description: "Nghiên cứu vai trò, vị trí và sứ mệnh của giai cấp công nhân trong lịch sử",
+        description: "Vai trò, vị trí và sứ mệnh của giai cấp công nhân trong lịch sử",
         content: `**Sứ mệnh lịch sử của giai cấp công nhân**
 
 Giai cấp công nhân là lực lượng xã hội tiên tiến nhất, có sứ mệnh lịch sử đặc biệt trong việc xây dựng xã hội mới.
@@ -124,8 +122,50 @@ Giai cấp công nhân cần có đảng cách mạng lãnh đạo, có lý lu�
       },
       {
         id: 3,
+        title: "Chủ Nghĩa Xã Hội và Quá Độ Lên Chủ Nghĩa Xã Hội",
+        description: "Tìm hiểu về chủ nghĩa xã hội và thời kỳ quá độ lên chủ nghĩa xã hội",
+        content: `**Chủ nghĩa xã hội và quá độ lên chủ nghĩa xã hội**
+
+**I. KHÁI NIỆM VỀ CHỦ NGHĨA XÃ HỘI**
+
+**1. Định nghĩa:**
+
+Chủ nghĩa xã hội là hình thái kinh tế - xã hội đầu tiên của hình thái cộng sản chủ nghĩa, trong đó tư liệu sản xuất thuộc sở hữu toàn xã hội và phân phối theo lao động.
+
+**2. Đặc điểm cơ bản:**
+
+- Sở hữu xã hội chủ nghĩa về tư liệu sản xuất
+- Phân phối theo lao động
+- Quyền lực thuộc về nhân dân lao động
+- Có sự lãnh đạo của Đảng cộng sản
+
+**II. THỜI KỲ QUÁ ĐỘ LÊN CHỦ NGHĨA XÃ HỘI**
+
+**1. Khái niệm:**
+
+Thời kỳ quá độ lên chủ nghĩa xã hội là giai đoạn lịch sử từ khi giai cấp công nhân giành được chính quyền đến khi xây dựng xong cơ sở vật chất - kỹ thuật và các quan hệ xã hội của chủ nghĩa xã hội.
+
+**2. Nhiệm vụ cơ bản:**
+
+- Cải tạo xã hội cũ thành xã hội mới
+- Xây dựng cơ sở vật chất - kỹ thuật của chủ nghĩa xã hội
+- Cải tạo con người cũ thành con người mới
+- Xây dựng các quan hệ xã hội mới
+
+**3. Đặc điểm:**
+
+- Tồn tại nhiều thành phần kinh tế
+- Có đấu tranh giai cấp
+- Cần có sự lãnh đạo của Đảng cộng sản
+- Thời gian kéo dài tương đối lâu`,
+        duration: 55,
+        order: 3,
+        isLocked: false,
+      },
+      {
+        id: 4,
         title: "Dân Chủ Xã Hội Chủ Nghĩa và Nhà Nước Xã Hội Chủ Nghĩa",
-        description: "Tìm hiểu về bản chất, đặc điểm của dân chủ và nhà nước xã hội chủ nghĩa",
+        description: "Bản chất, đặc điểm của dân chủ và nhà nước xã hội chủ nghĩa",
         content: `**Dân chủ xã hội chủ nghĩa và Nhà nước xã hội chủ nghĩa**
 
 **I. DÂN CHỦ XÃ HỘI CHỦ NGHĨA**
@@ -172,17 +212,15 @@ Nhà nước xã hội chủ nghĩa là nhà nước của nhân dân, do nhân 
 - Tập trung dân chủ
 - Tập thể lãnh đạo, cá nhân phụ trách
 - Pháp chế xã hội chủ nghĩa
-- Công khai, minh bạch
-
-Mối quan hệ giữa dân chủ xã hội chủ nghĩa và nhà nước xã hội chủ nghĩa là mối quan hệ thống nhất biện chứng, trong đó dân chủ là mục tiêu, nhà nước là công cụ thực hiện.`,
+- Công khai, minh bạch`,
         duration: 60,
-        order: 3,
-        isLocked: false,
+        order: 4,
+        isLocked: true,
       },
       {
-        id: 4,
-        title: "Cơ Cấu Xã Hội - Giai Cấp và Liên Minh Giai Cấp",
-        description: "Phân tích cơ cấu xã hội, mối quan hệ giai cấp trong thời kỳ quá độ",
+        id: 5,
+        title: "Cơ Cấu Xã Hội - Giai Cấp và Liên Minh Giai Cấp, Tầng Lớp Trong Thời Kỳ Quá Độ Lên Chủ Nghĩa Xã Hội",
+        description: "Cơ cấu xã hội, mối quan hệ giai cấp trong thời kỳ quá độ",
         content: `**Cơ cấu xã hội - giai cấp và liên minh giai cấp, tầng lớp trong thời kỳ quá độ lên chủ nghĩa xã hội**
 
 **I. CƠ CẤU XÃ HỘI TRONG THỜI KỲ QUÁ ĐỘ**
@@ -214,67 +252,30 @@ Cơ cấu xã hội trong thời kỳ quá độ lên chủ nghĩa xã hội có
 
 **III. CHÍNH SÁCH ĐỐI VỚI CÁC GIAI CẤP, TẦNG LỚP**
 
-**1. Đối với giai cấp công nhân:**
-
-- Nâng cao ý thức giai cấp và trình độ
-- Tăng cường vai trò lãnh đạo
-- Cải thiện điều kiện sống và làm việc
-
-**2. Đối với giai cấp nông dân:**
-
-- Cải cách ruộng đất, hợp tác hóa nông nghiệp
-- Nâng cao trình độ kỹ thuật và ý thức
-- Cải thiện đời sống nông thôn
-
-**3. Đối với tầng lớp trí thức:**
-
-- Chính sách đoàn kết, giáo dục, cải tạo
-- Tạo điều kiện phát huy tài năng
-- Xây dựng đội ngũ trí thức mới
-
-**4. Đối với các tầng lớp khác:**
-
-- Chính sách linh hoạt, phù hợp với từng tầng lớp
-- Hạn chế và cải tạo các yếu tố tiêu cực
-- Thu hút tham gia xây dựng đất nước
-
 Sự thống nhất và liên minh giữa các giai cấp, tầng lớp là điều kiện quan trọng đảm bảo thành công của sự nghiệp cách mạng xã hội chủ nghĩa.`,
         duration: 55,
-        order: 4,
+        order: 5,
         isLocked: true,
       },
       {
-        id: 5,
-        title: "Vấn Đề Dân Tộc và Tôn Giáo",
-        description: "Nghiên cứu chính sách dân tộc và tôn giáo trong thời kỳ quá độ lên chủ nghĩa xã hội",
+        id: 6,
+        title: "Vấn Đề Dân Tộc và Tôn Giáo Trong Thời Kỳ Quá Độ Lên Chủ Nghĩa Xã Hội",
+        description: "Chính sách dân tộc và tôn giáo trong thời kỳ quá độ",
         content: `**Vấn đề dân tộc và tôn giáo trong thời kỳ quá độ lên chủ nghĩa xã hội**
 
 **I. VẤN ĐỀ DÂN TỘC**
 
 **1. Quan điểm về dân tộc:**
 
-- Dân tộc là cộng đồng người có chung ngôn ngữ, lãnh thổ, đời sống kinh tế và những nét đặc trưng tâm lý văn hóa được biểu hiện trong cộng đồng văn hóa
+- Dân tộc là cộng đồng người có chung ngôn ngữ, lãnh thổ, đời sống kinh tế và những nét đặc trưng tâm lý văn hóa
 - Dân tộc là hiện tượng lịch sử-xã hội, có quá trình hình thành, phát triển và biến đổi
 
-**2. Đặc điểm của vấn đề dân tộc trong thời kỳ quá độ:**
-
-- Tính phức tạp: Do sự tồn tại đồng thời của nhiều dân tộc khác nhau
-- Tính nhạy cảm: Liên quan đến truyền thống, văn hóa, tôn giáo
-- Tính lâu dài: Cần thời gian để giải quyết triệt để
-
-**3. Nguyên tắc giải quyết vấn đề dân tộc:**
+**2. Nguyên tắc giải quyết vấn đề dân tộc:**
 
 - **Bình đẳng:** Tất cả các dân tộc đều bình đẳng về quyền và nghĩa vụ
 - **Đoàn kết:** Tăng cường đoàn kết, gắn bó giữa các dân tộc
 - **Tự do:** Tôn trọng quyền tự quyết của các dân tộc
 - **Cùng phát triển:** Hỗ trợ các dân tộc ít người phát triển
-
-**4. Chính sách dân tộc:**
-
-- Xóa bỏ mọi hình thức phân biệt dân tộc
-- Phát triển kinh tế-xã hội vùng dân tộc thiểu số
-- Bảo tồn và phát huy bản sắc văn hóa dân tộc
-- Đào tạo đội ngũ cán bộ dân tộc thiểu số
 
 **II. VẤN ĐỀ TÔN GIÁO**
 
@@ -291,29 +292,15 @@ Sự thống nhất và liên minh giữa các giai cấp, tầng lớp là đi�
 - **Tôn trọng:** Tôn trọng các tín ngưỡng, tôn giáo hợp pháp
 - **Không can thiệp:** Nhà nước không can thiệp vào hoạt động tôn giáo hợp pháp
 
-**3. Chính sách tôn giáo:**
-
-- Đảm bảo quyền tự do tín ngưỡng, tôn giáo
-- Tôn trọng và bảo vệ di tích tôn giáo
-- Khuyến khích tôn giáo tham gia các hoạt động xã hội tích cực
-- Ngăn chặn các hoạt động lợi dụng tôn giáo để chống phá
-
-**III. MỐI QUAN HỆ GIỮA VẤN ĐỀ DÂN TỘC VÀ TÔN GIÁO**
-
-- Vấn đề dân tộc và tôn giáo thường gắn kết chặt chẽ với nhau
-- Cần giải quyết đồng bộ, không tách rời
-- Phải cân nhắc cẩn trọng để tránh xung đột
-- Sử dụng vai trò tích cực của tôn giáo trong việc đoàn kết dân tộc
-
 Giải quyết tốt vấn đề dân tộc và tôn giáo là điều kiện quan trọng để xây dựng xã hội đoàn kết, thống nhất và phát triển bền vững.`,
         duration: 65,
-        order: 5,
+        order: 6,
         isLocked: true,
       },
       {
-        id: 6,
-        title: "Vấn Đề Gia Đình Trong Thời Kỳ Quá Độ",
-        description: "Phân tích vai trò và những thay đổi của gia đình trong xã hội mới",
+        id: 7,
+        title: "Vấn Đề Gia Đình Trong Thời Kỳ Quá Độ Lên Chủ Nghĩa Xã Hội",
+        description: "Vai trò và những thay đổi của gia đình trong xã hội mới",
         content: `**Vấn đề gia đình trong thời kỳ quá độ lên chủ nghĩa xã hội**
 
 **I. KHÁI NIỆM VÀ VỊ TRÍ CỦA GIA ĐÌNH**
@@ -329,7 +316,7 @@ Gia đình là tế bào cơ bản của xã hội, là cộng đồng những n
 - Là môi trường giáo dục đạo đức, nhân cách
 - Là đơn vị kinh tế cơ bản trong một số lĩnh vực
 
-**II. ĐỘC ĐIỂM CỦA GIA ĐÌNH TRONG THỜI KỲ QUÁ ĐỘ**
+**II. ĐẶC ĐIỂM CỦA GIA ĐÌNH TRONG THỜI KỲ QUÁ ĐỘ**
 
 **1. Sự thay đổi về cấu trúc:**
 
@@ -343,59 +330,16 @@ Gia đình là tế bào cơ bản của xã hội, là cộng đồng những n
 - Chức năng xã hội: Tăng cường vai trò giáo dục, chăm sóc
 - Chức năng tâm lý: Nơi nghỉ ngơi, chia sẻ tinh thần
 
-**3. Những vấn đề mới nảy sinh:**
+**III. GIẢI PHÓNG PHỤ NỮ VÀ BÌNH ĐẲNG GIỚI**
 
-- Xung đột giữa các thế hệ
-- Vấn đề cân bằng giữa công việc và gia đình
-- Ảnh hưởng của đô thị hóa, công nghiệp hóa
-
-**III. CHÍNH SÁCH ĐỐI VỚI GIA ĐÌNH**
-
-**1. Mục tiêu:**
-
-- Xây dựng gia đình văn minh, hạnh phúc, bền vững
-- Phát huy vai trò tích cực của gia đình trong xã hội
-- Bảo vệ quyền lợi hợp pháp của các thành viên gia đình
-
-**2. Các chính sách cụ thể:**
-
-**a) Về hôn nhân:**
-- Tự do trong hôn nhân
-- Bình đẳng giới trong gia đình
-- Khuyến khích kết hôn muộn, sinh con có kế hoạch
-
-**b) Về nuôi dạy con:**
-- Đảm bảo quyền trẻ em
-- Giáo dục toàn diện cho trẻ
-- Hỗ trợ gia đình trong việc nuôi dạy con
-
-**c) Về người cao tuổi:**
-- Khuyến khích hiếu thảo, chăm sóc cha mẹ
-- Xây dựng hệ thống an sinh xã hội
-- Phát huy vai trò của người cao tuổi
-
-**3. Các biện pháp hỗ trợ:**
-
-- Phát triển các dịch vụ xã hội hóa
-- Cải thiện điều kiện nhà ở, y tế, giáo dục
-- Xây dựng văn hóa gia đình tốt đẹp
-
-**IV. GIẢI PHÓNG PHỤ NỮ VÀ BÌNH ĐẲNG GIỚI**
-
-**1. Vị trí, vai trò của phụ nữ:**
-
-- Phụ nữ chiếm một nửa dân số, là lực lượng quan trọng
-- Có vai trò đặc biệt trong sinh sản, nuôi dạy con
-- Cần được giải phóng khỏi mọi sự áp bức, bất bình đẳng
-
-**2. Nội dung giải phóng phụ nữ:**
+**1. Nội dung giải phóng phụ nữ:**
 
 - Giải phóng kinh tế: Tham gia lao động xã hội, độc lập kinh tế
 - Giải phóng chính trị: Tham gia quản lý nhà nước, xã hội
 - Giải phóng văn hóa: Được học tập, nâng cao trình độ
 - Giải phóng gia đình: Bình đẳng trong hôn nhân, gia đình
 
-**3. Biện pháp thực hiện:**
+**2. Biện pháp thực hiện:**
 
 - Đảm bảo cơ hội việc làm cho phụ nữ
 - Phát triển các dịch vụ xã hội hóa việc nhà
@@ -404,104 +348,6 @@ Gia đình là tế bào cơ bản của xã hội, là cộng đồng những n
 
 Gia đình ổn định, hạnh phúc là nền tảng của xã hội ổn định và phát triển. Việc giải quyết tốt các vấn đề gia đình góp phần quan trọng vào việc xây dựng xã hội mới.`,
         duration: 70,
-        order: 6,
-        isLocked: true,
-      },
-      {
-        id: 7,
-        title: "Tổng Kết Chủ Nghĩa Xã Hội Khoa Học",
-        description: "Ôn tập, hệ thống hóa và đánh giá toàn bộ kiến thức đã học",
-        content: `**Tổng kết Chủ nghĩa xã hội khoa học**
-
-**I. TỔNG QUAN VỀ CHỦ NGHĨA XÃ HỘI KHOA HỌC**
-
-**1. Bản chất và ý nghĩa:**
-
-Chủ nghĩa xã hội khoa học là hệ thống lý luận khoa học về sự phát triển của xã hội loài người, về con đường và phương pháp chuyển từ chủ nghĩa tư bản lên chủ nghĩa xã hội và chủ nghĩa cộng sản.
-
-**2. Các thành tựu chính:**
-
-- Khám phá ra quy luật phát triển của xã hội loài người
-- Chứng minh tính tất yếu của chủ nghĩa xã hội
-- Xác định lực lượng và con đường cách mạng
-- Vạch ra những nguyên tắc cơ bản của xã hội mới
-
-**II. HỆ THỐNG KIẾN THỨC CƠ BẢN**
-
-**1. Về sự ra đời và phát triển:**
-
-- Điều kiện lịch sử ra đời
-- Cơ sở khoa học tự nhiên và xã hội
-- Quá trình phát triển và hoàn thiện
-
-**2. Về lực lượng cách mạng:**
-
-- Giai cấp công nhân và sứ mệnh lịch sử
-- Vai trò của Đảng cộng sản
-- Liên minh các giai cấp, tầng lớp
-
-**3. Về xã hội xã hội chủ nghĩa:**
-
-- Dân chủ xã hội chủ nghĩa
-- Nhà nước xã hội chủ nghĩa
-- Cơ cấu xã hội trong thời kỳ quá độ
-
-**4. Về các vấn đề xã hội:**
-
-- Vấn đề dân tộc và tôn giáo
-- Vấn đề gia đình và giải phóng phụ nữ
-- Các vấn đề xã hội khác
-
-**III. Ý NGHĨA THỰC TIỄN**
-
-**1. Đối với việc nhận thức thế giới:**
-
-- Cung cấp thế giới quan khoa học
-- Giúp hiểu đúng quy luật phát triển xã hội
-- Định hướng tư duy và hành động
-
-**2. Đối với thực tiễn cách mạng:**
-
-- Làm cơ sở lý luận cho hoạt động thực tiễn
-- Hướng dẫn xây dựng chiến lược, đường lối
-- Định hướng công tác tuyên truyền, giáo dục
-
-**3. Đối với Việt Nam hiện tại:**
-
-- Cơ sở lý luận cho công cuộc đổi mới
-- Hướng dẫn xây dựng chủ nghĩa xã hội ở Việt Nam
-- Định hướng phát triển đất nước
-
-**IV. NHỮNG VẤN ĐỀ ĐẶT RA TRONG THỜI ĐẠI MỚI**
-
-**1. Thách thức:**
-
-- Toàn cầu hóa và hội nhập quốc tế
-- Phát triển khoa học - công nghệ
-- Biến đổi khí hậu và môi trường
-- An ninh, quốc phòng trong thời đại mới
-
-**2. Nhiệm vụ:**
-
-- Vận dụng sáng tạo lý luận vào thực tiễn
-- Phát triển và hoàn thiện lý luận
-- Đào tạo thế hệ trẻ có bản lĩnh vững vàng
-- Đấu tranh chống các quan điểm sai trái
-
-**V. KẾT LUẬN**
-
-Chủ nghĩa xã hội khoa học không chỉ là hệ thống lý luận khoa học mà còn là kim chỉ nam cho hành động cách mạng. Trong điều kiện mới, cần tiếp tục nghiên cứu, vận dụng và phát triển sáng tạo những nguyên lý cơ bản của chủ nghĩa xã hội khoa học để phục vụ sự nghiệp xây dựng và bảo vệ Tổ quốc, xây dựng chủ nghĩa xã hội ở Việt Nam.
-
-**Câu hỏi ôn tập:**
-
-1. Trình bày hoàn cảnh lịch sử ra đời của chủ nghĩa xã hội khoa học
-2. Phân tích sứ mệnh lịch sử của giai cấp công nhân
-3. Bản chất của dân chủ xã hội chủ nghĩa là gì?
-4. Đặc điểm cơ cấu xã hội trong thời kỳ quá độ lên chủ nghĩa xã hội
-5. Nguyên tắc giải quyết vấn đề dân tộc và tôn giáo
-6. Vai trò của gia đình trong xã hội xã hội chủ nghĩa
-7. Ý nghĩa của việc học tập chủ nghĩa xã hội khoa học đối với sinh viên hiện nay`,
-        duration: 90,
         order: 7,
         isLocked: true,
       },
