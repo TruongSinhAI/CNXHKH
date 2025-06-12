@@ -4,8 +4,12 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { Bot, User, Send } from "lucide-react";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { apiRequest } from "@/lib/queryClient";
+
+import "./ai-chat.css";
 
 interface ChatMessage {
   id: string;
@@ -16,11 +20,10 @@ interface ChatMessage {
 }
 
 export default function AiChat() {
-  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
-      message: "Xin chào! Tôi là trợ lý AI chuyên về môn Chủ nghĩa xã hội khoa học. Tôi có thể giúp bạn hiểu các khái niệm lý luận, giải thích nội dung bài học và hỗ trợ ôn tập kiểm tra.",
+      message: "Xin chào! Cô  là trợ lý AI chuyên về môn Chủ nghĩa xã hội khoa học. Cô có thể giúp bạn hiểu các khái niệm lý luận, giải thích nội dung bài học và hỗ trợ ôn tập kiểm tra.",
       timestamp: Date.now(),
       isUser: false,
     }
@@ -39,47 +42,133 @@ export default function AiChat() {
 
   const sendMessageMutation = useMutation({
     mutationFn: async (message: string) => {
-      const response = await apiRequest("POST", "/api/chat", {
-        message,
-        sessionId: sessionId.current,
+      // Create AI message ID trước khi bắt đầu
+      const aiMessageId = `ai-${Date.now()}`;
+      
+      // Thêm user message và placeholder AI message cùng lúc
+      setMessages(prev => {
+        const userMessage: ChatMessage = {
+          id: `user-${Date.now()}`,
+          message,
+          timestamp: Date.now(),
+          isUser: true,
+        };
+        
+        const aiMessage: ChatMessage = {
+          id: aiMessageId,
+          message: "",
+          timestamp: Date.now(),
+          isUser: false,
+        };
+        
+        return [...prev, userMessage, aiMessage];
       });
-      return response.json();
-    },
-    onSuccess: (data, message) => {
-      setMessages(prev => [
-        ...prev,
-        {
-          id: `ai-${Date.now()}`,
-          message: data.response,
-          timestamp: Date.now(),
-          isUser: false,
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message,
+            sessionId: sessionId.current,
+            messages: [
+              ...messages
+                .filter(m => m.id !== "welcome")
+                .map(m => ({
+                  role: m.isUser ? "user" : "assistant",
+                  content: m.message
+                })),
+              { role: "user", content: message }
+            ]
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-      ]);
-    },
-    onError: () => {
-      setMessages(prev => [
-        ...prev,
-        {
-          id: `error-${Date.now()}`,
-          message: "Xin lỗi, tôi không thể trả lời câu hỏi này lúc này. Vui lòng thử lại sau.",
-          timestamp: Date.now(),
-          isUser: false,
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error("No reader available");
+
+        let currentResponse = "";
+        let errorReceived = false;
+        let doneReceived = false;
+        const decoder = new TextDecoder();
+
+        while (!doneReceived && !errorReceived) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const data = line.slice(5);
+              if (data.trim() === '[DONE]') {
+                console.log("Received [DONE] at", Date.now());
+                doneReceived = true;
+                break;
+              }
+
+              try {
+                const parsed = JSON.parse(data);
+                if (parsed.error) {
+                  errorReceived = true;
+                  // Cập nhật message hiện tại với lỗi thay vì tạo message mới
+                  setMessages(prev => 
+                    prev.map(msg =>
+                      msg.id === aiMessageId
+                        ? { ...msg, message: parsed.error }
+                        : msg
+                    )
+                  );
+                  break;
+                }
+                if (parsed.text) {
+                  currentResponse += parsed.text;
+                  // Cập nhật message với ID cụ thể
+                  setMessages(prev => 
+                    prev.map(msg =>
+                      msg.id === aiMessageId
+                        ? { ...msg, message: currentResponse }
+                        : msg
+                    )
+                  );
+                }
+              } catch (e) {
+                console.error('Error parsing SSE message:', e);
+              }
+            }
+          }
         }
-      ]);
+       
+        console.log("Final UI update at", Date.now(), currentResponse);
+        return currentResponse;
+        
+      } catch (error) {
+        // Cập nhật message hiện tại với lỗi
+        setMessages(prev => 
+          prev.map(msg =>
+            msg.id === aiMessageId
+              ? { ...msg, message: "Xin lỗi, cô không thể trả lời câu hỏi này lúc này. Vui lòng thử lại sau." }
+              : msg
+          )
+        );
+        throw error;
+      }
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
+      // onError sẽ không thêm message mới nữa vì đã xử lý trong try/catch
     },
   });
 
   const handleSendMessage = () => {
     if (!inputValue.trim() || sendMessageMutation.isPending) return;
 
-    const userMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
-      message: inputValue,
-      timestamp: Date.now(),
-      isUser: true,
-    };
-
-    setMessages(prev => [...prev, userMessage]);
     sendMessageMutation.mutate(inputValue);
     setInputValue("");
   };
@@ -92,120 +181,119 @@ export default function AiChat() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40">
-      {/* Chat Toggle Button */}
-      <Button
-        className="w-14 h-14 rounded-full shadow-lg hover:scale-110 transition-all duration-300"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <MessageCircle className="h-6 w-6" />
-      </Button>
+    <div className="w-full h-full">
+      <Card className="w-full h-[600px] shadow-xl">
+        <CardHeader className="p-4 bg-background border-b">
+          <div className="flex items-center space-x-2">
+            <img
+                        src="/robot.png"
+                        alt="AI"
+                        className="h-5 w-5 object-contain"
+                        style={{ display: "block" }}
+                      />
+            <h6 className="font-semibold">Trợ Lý AI</h6>
+          </div>
+        </CardHeader>
 
-      {/* Chat Interface */}
-      {isOpen && (
-        <Card className="absolute bottom-16 right-0 w-80 h-96 shadow-xl">
-          {/* Chat Header */}
-          <CardHeader className="p-4 bg-primary text-primary-foreground rounded-t-lg">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Bot className="h-5 w-5" />
-                <h6 className="font-semibold">Trợ Lý AI</h6>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsOpen(false)}
-                className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10 h-auto p-1"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-            <p className="text-xs text-primary-foreground/80 mt-1">
-              Hỏi tôi bất kỳ điều gì về khóa học!
-            </p>
-          </CardHeader>
-
-          {/* Chat Messages */}
-          <CardContent className="p-0 flex flex-col h-80">
-            <ScrollArea className="flex-1 p-4">
-              <div className="space-y-4">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex items-start space-x-2 ${
-                      message.isUser ? "flex-row-reverse space-x-reverse" : ""
-                    }`}
-                  >
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                      message.isUser ? "bg-primary" : "bg-primary/10"
+        <CardContent className="p-0 flex flex-col h-[calc(600px-4rem)]">
+          <ScrollArea className="flex-1 p-4">
+            <div className="space-y-4">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex items-start space-x-2 ${
+                    message.isUser ? "flex-row-reverse space-x-reverse" : ""
+                  }`}
+                >
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center overflow-hidden ${
+                    message.isUser ? "bg-primary" : "bg-primary/10"
+                  }`}>
+                    {message.isUser ? (
+                      <User className="text-primary-foreground h-3 w-3" />
+                    ) : (
+                      <img
+                        src="/robot.png"
+                        alt="AI"
+                        className="h-5 w-5 object-contain"
+                        style={{ display: "block" }}
+                      />
+                    )}
+                  </div>
+                  <div className={`flex-1 ${message.isUser ? "text-right" : ""}`}>
+                    <div className={`text-sm inline-block max-w-2xl vietnamese-text ${
+                      message.isUser
+                        ? "chat-bubble-user"
+                        : "chat-bubble-ai markdown-content"
                     }`}>
                       {message.isUser ? (
-                        <User className="text-primary-foreground h-3 w-3" />
+                        message.message
                       ) : (
-                        <Bot className="text-primary h-3 w-3" />
+                        <>
+                          {message.message ? (
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                code(props) {
+                                  const { children, className, ...rest } = props;
+                                  const isInline = !className;
+                                  return (
+                                    <code className={`${isInline ? 'bg-gray-100 rounded px-1' : 'block bg-gray-100 p-2 rounded'} ${className || ''}`} {...rest}>
+                                      {children}
+                                    </code>
+                                  );
+                                }
+                              }}
+                            >
+                              {message.message.replace('[DONE]', '')}
+                            </ReactMarkdown>
+                          ) : (
+                            // Hiển thị loading dots khi message rỗng
+                            <div className="flex space-x-1">
+                              <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+                              <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                              <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
-                    <div className={`flex-1 ${message.isUser ? "text-right" : ""}`}>
-                      <div className={`text-sm inline-block max-w-xs vietnamese-text ${
-                        message.isUser 
-                          ? "chat-bubble-user" 
-                          : "chat-bubble-ai"
-                      }`}>
-                        {message.message}
-                      </div>
-                      <div className="text-xs text-muted-foreground mt-1">
-                        {new Date(message.timestamp).toLocaleTimeString("vi-VN", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {new Date(message.timestamp).toLocaleTimeString("vi-VN", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </div>
                   </div>
-                ))}
-                {sendMessageMutation.isPending && (
-                  <div className="flex items-start space-x-2">
-                    <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Bot className="text-primary h-3 w-3" />
-                    </div>
-                    <div className="chat-bubble-ai">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-            </ScrollArea>
-
-            {/* Chat Input */}
-            <div className="p-4 border-t border-border">
-              <div className="flex items-center space-x-2">
-                <Input
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Nhập câu hỏi của bạn..."
-                  className="flex-1"
-                  disabled={sendMessageMutation.isPending}
-                />
-                <Button
-                  onClick={handleSendMessage}
-                  disabled={!inputValue.trim() || sendMessageMutation.isPending}
-                  size="sm"
-                >
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-2">
-                Nhấn Enter để gửi tin nhắn
-              </p>
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
             </div>
-          </CardContent>
-        </Card>
-      )}
+          </ScrollArea>
+
+          <div className="p-4 border-t border-border">
+            <div className="flex items-center space-x-2">
+              <Input
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Nhập câu hỏi của bạn..."
+                className="flex-1"
+                disabled={sendMessageMutation.isPending}
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={!inputValue.trim() || sendMessageMutation.isPending}
+                size="sm"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Nhấn Enter để gửi tin nhắn
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

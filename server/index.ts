@@ -1,6 +1,13 @@
+import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+
+// Log environment status at startup
+console.log("Environment variables loaded:", {
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY ? "present" : "missing",
+  NODE_ENV: process.env.NODE_ENV || "development"
+});
 
 const app = express();
 app.use(express.json());
