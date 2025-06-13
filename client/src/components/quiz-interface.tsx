@@ -22,7 +22,7 @@ export default function QuizInterface({ quiz }: QuizInterfaceProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [submittedAnswers, setSubmittedAnswers] = useState<Record<string, string>>({});
-  const [timeRemaining, setTimeRemaining] = useState(900); // 15 minutes
+  const [timeRemaining, setTimeRemaining] = useState(1200); // 15 minutes
   const [showFeedback, setShowFeedback] = useState<string | null>(null);
 
   const questions = quiz.questions as Question[];
@@ -222,10 +222,10 @@ export default function QuizInterface({ quiz }: QuizInterfaceProps) {
                         Câu Tiếp Theo <ArrowRight className="h-4 w-4 ml-1" />
                       </Button>
                     )}
-                    <Button variant="link" className="p-0 text-muted-foreground">
+                    {/* <Button variant="link" className="p-0 text-muted-foreground">
                       <MessageCircle className="h-4 w-4 mr-1" />
                       Hỏi Trợ Lý AI
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>

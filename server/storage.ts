@@ -87,7 +87,7 @@ export class MemStorage implements IStorage {
 
   async getAllQuizzes(): Promise<Quiz[]> {
 
-    return Array.from(this.quizzesAll.values());
+    return Array.from(this.quizzes.values());
   }
 
   async getComprehensiveQuiz(): Promise<Quiz> {
