@@ -1575,18 +1575,6 @@ const structuredQuizzes: Quiz[] = [
         "explanation": "C. Mác và Ph. Ăngghen đã sử dụng nhiều thuật ngữ khác nhau để chỉ giai cấp công nhân, trong đó phổ biến nhất là 'giai cấp vô sản' (proletariat)."
       },
       {
-        "id": "q2_13",
-        "text": "Sứ mệnh lịch sử của giai cấp công nhân kết thúc khi nào?",
-        "options": [
-          { "value": "A", "text": "Khi giành được chính quyền" },
-          { "value": "B", "text": "Khi xây dựng xong chủ nghĩa xã hội" },
-          { "value": "C", "text": "Khi xây dựng thành công chủ nghĩa cộng sản, xóa bỏ hoàn toàn giai cấp" },
-          { "value": "D", "text": "Khi chủ nghĩa tư bản sụp đổ trên toàn thế giới" }
-        ],
-        "correctAnswer": "C",
-        "explanation": "Sứ mệnh lịch sử của giai cấp công nhân chỉ hoàn thành khi mục tiêu cuối cùng là xây dựng thành công xã hội cộng sản chủ nghĩa, xã hội không còn giai cấp, không còn nhà nước."
-      },
-      {
         "id": "q2_14",
         "text": "Một trong những phương hướng xây dựng giai cấp công nhân Việt Nam hiện nay là gì?",
         "options": [
