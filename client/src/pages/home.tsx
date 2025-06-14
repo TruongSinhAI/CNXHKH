@@ -72,7 +72,7 @@ export default function Home() {
           {/* Main title with gradient */}
           <div className="relative">
             <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight mb-4 animate-fade-in">
-              Chủ Nghĩa Xã Hội Khoa học
+              Chủ Nghĩa Xã Hội
               <br />
               <span className="text-4xl md:text-6xl">Khoa Học</span>
             </h1>
